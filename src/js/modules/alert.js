@@ -1,16 +1,32 @@
-import alerts from '../../public/json/alerts.json'; 
-
 class Alert {
     constructor() {
-        this.alertsData = alerts; // Store imported JSON
+        this.alertsData = [];
+        // Initialize as empty
+    }
+
+    // Function to fetch and store alerts
+    async fetchAlerts() {
+        try {
+            const response = await fetch('/json/alerts.json');
+            // Public folder is accessible via /
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            this.alertsData = await response.json();
+        } catch (error) {
+            console.error('Error loading alerts:', error);
+        }
     }
 
     // Function to display alerts on the page
-    renderAlerts() {
-        if (!this.alertsData || this.alertsData.length === 0) return;
+    async renderAlerts() {
+        await this.fetchAlerts();
+        // Ensure data is fetched before rendering
+
+        if (!this.alertsData || this.alertsData.length === 0)
+            return;
 
         const alertSection = document.createElement('section');
-        
         alertSection.className = 'alert-list';
 
         this.alertsData.forEach(alert => {
@@ -19,7 +35,8 @@ class Alert {
             alertItem.style.backgroundColor = alert.background;
             alertItem.style.color = alert.color;
             alertSection.appendChild(alertItem);
-        });
+        }
+        );
 
         const mainElement = document.querySelector('main');
         if (mainElement) {
