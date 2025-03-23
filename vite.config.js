@@ -1,4 +1,4 @@
-import { resolve } from "path";
+import path from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -8,13 +8,11 @@ export default defineConfig({
     outDir: "../dist",
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "src/index.html"),
-        cart: resolve(__dirname, "src/cart/index.html"),
-        checkout: resolve(__dirname, "src/checkout/index.html"),
-        product: resolve(__dirname, "src/product_pages/index.html"
-        ),
-        listing: resolve(__dirname, "src/product_listing/index.html")
-  
+        main: path.resolve(__dirname, "src/index.html"),
+        cart: path.resolve(__dirname, "src/cart/index.html"),
+        checkout: path.resolve(__dirname, "src/checkout/index.html"),
+        product: path.resolve(__dirname, "src/product_pages/index.html"),
+        listing: path.resolve(__dirname, "src/product_listing/index.html"),
       },
     },
   },
